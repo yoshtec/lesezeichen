@@ -38,3 +38,12 @@ def add(name: str, url: str):
     """add"""
     lzn.add(name, url)
     lzn.save()
+
+
+@cli.command()
+@click.argument("name", type=UrlName())
+def delete(name: str):
+    """delete entry with name"""
+    if lzn.delete(name):
+        lzn.save()
+
