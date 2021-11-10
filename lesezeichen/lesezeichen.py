@@ -9,7 +9,6 @@ import subprocess
 
 
 class Lesezeichen:
-
     def __init__(self):
         self.bookmarks = dict()
         self.load()
@@ -35,7 +34,7 @@ class Lesezeichen:
         self.bookmarks[title] = url
 
     def search_by_id(self, search: str):
-        return {k: v for k, v in self.bookmarks.items() if fnmatch.fnmatch(v, search)}
+        return {k: v for k, v in self.bookmarks.items() if k.startswith(search)}
 
     def search(self, search: str):
         return {k: v for k, v in self.bookmarks.items() if search in v or search in k}
