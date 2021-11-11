@@ -1,30 +1,29 @@
-#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 # SPDX-License-Identifier: MIT
 
 from click.testing import CliRunner
 from pathlib import Path
-
-import lesezeichen.lesezeichen
 from lesezeichen import lesezeichen, cli
 
 
 runner = CliRunner()
 
 
-def mockreturn(cls):
+def mock_file(cls):
     with runner.isolated_filesystem():
-        path = Path(".")
+        path = Path() / ".lzn_tmp"
         return path
 
 
 # monkeypatch the file function to return a temp dir
-lesezeichen.Lesezeichen._file = mockreturn
+lesezeichen.Lesezeichen._file = mock_file
 
 
 class TestLesezeichen:
 
     def test_something(self):
-        result = runner.invoke(cli.cli(), ["add", "test", "test"])
+        result = runner.invoke(cli.add, ["test", "test"])
+        print(result)
+        result = runner.invoke(cli.open, ["test"])
         print(result)
 

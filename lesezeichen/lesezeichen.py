@@ -9,13 +9,15 @@ import platform
 
 
 class Lesezeichen:
-    def __init__(self):
+    def __init__(self, file=None):
         self.bookmarks = dict()
+        self.file = file
         self.load()
 
-    @staticmethod
-    def _file():
-        return pathlib.Path.home() / ".lzn_lesezeichen"
+    def _file(self):
+        if self.file is None:
+            self.file = pathlib.Path.home() / ".lzn_lesezeichen"
+        return self.file
 
     def load(self):
         file = self._file()

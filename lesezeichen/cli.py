@@ -7,11 +7,9 @@ from click.shell_completion import CompletionItem
 from lesezeichen.lesezeichen import Lesezeichen
 
 
-lzn = Lesezeichen()
-
-
 class UrlName(click.ParamType):
     def shell_complete(self, ctx, param, incomplete):
+        lzn = Lesezeichen()
         return [
             CompletionItem(name, help=url)
             for name, url in lzn.search_by_id(search=incomplete).items()
@@ -22,12 +20,14 @@ class UrlName(click.ParamType):
 @click.version_option()
 def cli():
     """Organize and start bookmarks"""
+    pass
 
 
 @cli.command()
 @click.argument("name", type=UrlName())
 def open(name: str):
     """Open url with the name"""
+    lzn = Lesezeichen()
     lzn.open(name)
 
 
@@ -36,6 +36,7 @@ def open(name: str):
 @click.argument("url")
 def add(name: str, url: str):
     """add"""
+    lzn = Lesezeichen()
     lzn.add(name, url)
     lzn.save()
 
@@ -44,6 +45,7 @@ def add(name: str, url: str):
 @click.argument("name", type=UrlName())
 def delete(name: str):
     """delete entry with name"""
+    lzn = Lesezeichen()
     if lzn.delete(name):
         lzn.save()
 
