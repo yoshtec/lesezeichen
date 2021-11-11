@@ -2,11 +2,11 @@
 # -*- coding: utf-8 -*-
 # SPDX-License-Identifier: MIT
 
-import fnmatch
 import json
 import pathlib
 import subprocess
 import platform
+
 
 class Lesezeichen:
     def __init__(self):
@@ -39,8 +39,10 @@ class Lesezeichen:
         if name in self.bookmarks:
             return self.bookmarks[name]
 
-    def add(self, title: str, url: str):
-        self.bookmarks[title] = url
+    def add(self, name: str, url: str):
+        if name in self.bookmarks:
+            print(f"overwrite current bookmark name={name}, url='{self.bookmarks[name]}'")
+        self.bookmarks[name] = url
 
     def search_by_id(self, search: str):
         return {k: v for k, v in self.bookmarks.items() if k.startswith(search)}
